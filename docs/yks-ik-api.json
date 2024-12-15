@@ -1,0 +1,323 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ybs-ik API",
+        "version": "1.0.0",
+        "description": "API documentation for the ybs-ik project."
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5000/api/v1",
+            "description": "local-dev v1"
+        },
+        {
+            "url": "https://",
+            "description": "prod"
+        },
+        {
+            "url": "https://staging-api.example.com/v1",
+            "description": "stage"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [{ "BearerAuth": [] }],
+    "paths": {
+        "/auth/check": {
+            "post": {
+                "security": [{ "BearerAuth": [] }],
+                "tags": ["auth"],
+                "summary": "Check Authentication",
+                "requestBody": {
+                    "description": "Authentication check data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Authentication status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "User Login",
+                "requestBody": {
+                    "description": "User credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Logged in user details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/static/cv/{id}": {
+            "get": {
+                "tags": ["static"],
+                "summary": "Get CV by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the CV",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CV details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/static/report/{id}": {
+            "get": {
+                "tags": ["static"],
+                "summary": "Get Report by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the report",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Report details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["static"],
+                "summary": "Update Report by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the report",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated report data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Report updated successfully"
+                    }
+                }
+            }
+        },
+        "/static/proposal/{id}": {
+            "get": {
+                "tags": ["static"],
+                "summary": "Get Proposal by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the proposal",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Proposal details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["static"],
+                "summary": "Update Proposal by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the proposal",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated proposal data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Proposal updated successfully"
+                    }
+                }
+            }
+        },
+        "/interview/application": {
+            "get": {
+                "tags": ["interview"],
+                "summary": "List All Applications",
+                "responses": {
+                    "200": {
+                        "description": "List of all applications",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/interview/application/{id}": {
+            "get": {
+                "tags": ["interview"],
+                "summary": "Get Application by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the application",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["interview"],
+                "summary": "Update Application by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the application",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Updated application data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Application updated successfully"
+                    }
+                }
+            }
+        }
+    }
+}
