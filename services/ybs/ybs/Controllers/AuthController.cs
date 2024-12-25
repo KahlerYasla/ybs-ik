@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ybs.Data;
 using ybs.Models.DTO;
 
 [ApiController]
@@ -7,7 +8,8 @@ public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
 
-    public AuthController(IAuthService authService)
+
+    public AuthController(IAuthService authService, MongoDbService mongoDbService)
     {
         _authService = authService;
     }

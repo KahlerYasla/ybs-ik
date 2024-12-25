@@ -1,4 +1,6 @@
-﻿using ybs.Models.DTO;
+﻿using System.IO;
+using Microsoft.AspNetCore.Http.HttpResults;
+using ybs.Models.DTO;
 
 public interface IStaticService
 {
@@ -11,16 +13,42 @@ public interface IStaticService
 
 public class StaticService : IStaticService
 {
-    public Task<object> GetCVByIdAsync(string id)
+    private readonly string _cvFolderPath;
+    private readonly string _reportFolderPath;
+
+    public StaticService(IWebHostEnvironment environment)
     {
-        // Fetch CV logic here
-        return Task.FromResult(new { CVId = id, Name = "Example CV" } as object);
+        // CV klasör yolunu belirle
+        _cvFolderPath = Path.Combine(environment.WebRootPath, "CV");
+        _reportFolderPath = Path.Combine(environment.WebRootPath, "Reports");
     }
 
-    public Task<object> GetReportByIdAsync(string id)
+    public async Task<object> GetCVByIdAsync(string id)
     {
-        // Fetch report logic here
-        return Task.FromResult(new { ReportId = id, Content = "Example Report" } as object);
+        // PDF dosyasının tam yolunu oluştur
+        var pdfFilePath = Path.Combine(_cvFolderPath, $"{id}.pdf");
+
+        // Dosyanın varlığını kontrol et
+        if (!File.Exists(pdfFilePath))
+        {
+            throw new FileNotFoundException($"CV file with ID {id} not found.");
+        }
+
+        // Dosyayı oku ve byte[] olarak döndür
+        var fileBytes = await File.ReadAllBytesAsync(pdfFilePath);
+
+        // Dosya içeriğini object olarak döndür
+        return new
+        {
+            FileName = $"{id}.pdf",
+            ContentType = "application/pdf",
+            FileContent = fileBytes
+        };
+    }
+
+    public async Task<object> GetReportByIdAsync(string id)
+    {
+        return new { };
     }
 
     public Task UpdateReportByIdAsync(string id, ReportDTO reportData)

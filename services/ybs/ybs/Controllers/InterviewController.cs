@@ -1,14 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
+using ybs.Data;
+using ybs.Models.DTO;
 
 [ApiController]
 [Route("api/interview")]
 public class InterviewController : ControllerBase
 {
     private readonly IInterviewService _interviewService;
+    private readonly IMongoCollection<ApplicationDTO>? _application;
 
-    public InterviewController(IInterviewService interviewService)
+
+    public InterviewController(IInterviewService interviewService, MongoDbService mongoDbService)
     {
         _interviewService = interviewService;
+        _application = mongoDbService.Database?.GetCollection<ApplicationDTO>("applications");
     }
 
     [HttpGet("application")]

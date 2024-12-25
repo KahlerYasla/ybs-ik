@@ -1,9 +1,14 @@
+using ybs.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<MongoDbService>();
+builder.Services.AddScoped<IStaticService, StaticService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IInterviewService, InterviewService>();
 
 var app = builder.Build();
 
