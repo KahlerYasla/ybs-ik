@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using ybs.Data;
 using ybs.Models.DTO;
+using static System.Net.Mime.MediaTypeNames;
 
 [ApiController]
 [Route("api/static")]
@@ -52,10 +53,24 @@ public class StaticController : ControllerBase
     }
 
     [HttpPut("report/{id}")]
-    public async Task<IActionResult> UpdateReportById(string id, [FromBody] ReportDTO reportData)
+    public async Task<ActionResult<ReportDTO>> UpdateReportById(string id, [FromBody] ReportUpdateDTO reportData)
     {
-       // object reps = await _reports.UpdateReportByIdAsync(id, reportData);
-        return Ok();
+        var filterDefinition = Builders<ReportDTO>.Filter.Eq(x => x.Id, id);
+        var updateDefinition = Builders<ReportDTO>.Update
+       .Set(x => x.Title, reportData.Title)
+        .Set(x => x.Content, reportData.Content);
+
+        var result = await _reports.UpdateOneAsync(filterDefinition, updateDefinition);
+        if (result.MatchedCount == 0)
+        {
+            return NotFound($"report with ID {id} not found.");
+        }
+
+        if (result.ModifiedCount == 0)
+        {
+            return BadRequest("Update failed. No fields were modified.");
+        }
+        return Ok("modified");
     }
 
     [HttpGet("proposal/{id}")]

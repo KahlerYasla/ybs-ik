@@ -14,4 +14,10 @@ namespace ybs.Models.DTO
         [BsonElement("content"), BsonRepresentation(MongoDB.Bson.BsonType.String)]
         public string Content { get; set; }
     }
+
+    public class ReportUpdateDTO
+    {
+        public string Title { get; set; }
+        public string Content { get; set; }
+    }
 }

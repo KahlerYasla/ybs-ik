@@ -18,23 +18,40 @@ public class InterviewController : ControllerBase
     }
 
     [HttpGet("application")]
-    public async Task<IActionResult> ListApplications()
+    public async Task<ActionResult<List<ApplicationDTO>>> ListApplications()
     {
-        var result = await _interviewService.ListApplicationsAsync();
-        return Ok(result);
+        var applications = await _application.Find(Builders<ApplicationDTO>.Filter.Empty).ToListAsync();
+
+
+        return applications;
     }
 
     [HttpGet("application/{id}")]
-    public async Task<IActionResult> GetApplicationById(string id)
+    public async Task<ActionResult<ApplicationDTO>> GetApplicationById(string id)
     {
-        var result = await _interviewService.GetApplicationByIdAsync(id);
-        return Ok(result);
+        var filterDefinition = Builders<ApplicationDTO>.Filter.Eq(x => x.ApplicationId, id);
+        return await _application.Find(filterDefinition).SingleOrDefaultAsync();
+
     }
 
     [HttpPut("application/{id}")]
-    public async Task<IActionResult> UpdateApplicationById(string id, [FromBody] ApplicationDTO applicationData)
+    public async Task<ActionResult<ApplicationDTO>> UpdateApplicationById(string id, [FromBody] ApplicationUpdateDTO applicationData)
     {
-        await _interviewService.UpdateApplicationByIdAsync(id, applicationData);
-        return Ok();
+        var filterDefinition = Builders<ApplicationDTO>.Filter.Eq(x => x.ApplicationId, id);
+        var updateDefinition = Builders<ApplicationDTO>.Update
+       .Set(x => x.CandidateName, applicationData.CandidateName)
+       .Set(x => x.Status, applicationData.Status);
+        var result = await _application.UpdateOneAsync(filterDefinition, updateDefinition);
+
+        if (result.MatchedCount == 0)
+        {
+            return NotFound($"Application with ID {id} not found.");
+        }
+
+        if (result.ModifiedCount == 0)
+        {
+            return BadRequest("Update failed. No fields were modified.");
+        }
+        return Ok("modified");
     }
 }
