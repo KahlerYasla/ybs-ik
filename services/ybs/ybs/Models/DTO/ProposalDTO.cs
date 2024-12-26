@@ -9,10 +9,17 @@ namespace ybs.Models.DTO
         public string Id { get; set; }
 
         [BsonElement("summary"), BsonRepresentation(MongoDB.Bson.BsonType.String)]
-        public string Summary { get; set; }
+        public string summary { get; set; }
 
         [BsonElement("details"), BsonRepresentation(MongoDB.Bson.BsonType.String)]
-        public string Details { get; set; }
+        public string details { get; set; }
 
     }
-}
+
+    public class ProposalUpdateDTO
+    {
+        public string summary { get; set; }
+        
+        public string details { get; set; }
+    }
+    }

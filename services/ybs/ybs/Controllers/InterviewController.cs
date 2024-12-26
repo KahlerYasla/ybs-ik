@@ -9,12 +9,17 @@ public class InterviewController : ControllerBase
 {
     private readonly IInterviewService _interviewService;
     private readonly IMongoCollection<ApplicationDTO>? _application;
+    private readonly IMongoCollection<ApplicationUpdateDTO>? _createApplication;
+
 
 
     public InterviewController(IInterviewService interviewService, MongoDbService mongoDbService)
     {
         _interviewService = interviewService;
         _application = mongoDbService.Database?.GetCollection<ApplicationDTO>("applications");
+        _createApplication = mongoDbService.Database?.GetCollection<ApplicationUpdateDTO>("applications");
+
+
     }
 
     [HttpGet("application")]
@@ -26,10 +31,21 @@ public class InterviewController : ControllerBase
         return applications;
     }
 
+    [HttpPost("application/create")]
+    public async Task<ActionResult> CreateApplication([FromBody] ApplicationUpdateDTO applicationData)
+    {
+
+
+        await _createApplication.InsertOneAsync(document: applicationData);
+
+
+        return Ok("Created");
+    }
+
     [HttpGet("application/{id}")]
     public async Task<ActionResult<ApplicationDTO>> GetApplicationById(string id)
     {
-        var filterDefinition = Builders<ApplicationDTO>.Filter.Eq(x => x.ApplicationId, id);
+        var filterDefinition = Builders<ApplicationDTO>.Filter.Eq(x => x.applicationId, id);
         return await _application.Find(filterDefinition).SingleOrDefaultAsync();
 
     }
@@ -37,15 +53,17 @@ public class InterviewController : ControllerBase
     [HttpPut("application/{id}")]
     public async Task<ActionResult<ApplicationDTO>> UpdateApplicationById(string id, [FromBody] ApplicationUpdateDTO applicationData)
     {
-        var filterDefinition = Builders<ApplicationDTO>.Filter.Eq(x => x.ApplicationId, id);
+        var filterDefinition = Builders<ApplicationDTO>.Filter.Eq(x => x.applicationId, id);
         var updateDefinition = Builders<ApplicationDTO>.Update
-       .Set(x => x.CandidateName, applicationData.CandidateName)
-       .Set(x => x.Status, applicationData.Status);
+       .Set(x => x.candidateName, applicationData.candidateName)
+       .Set(x => x.status, applicationData.status);
         var result = await _application.UpdateOneAsync(filterDefinition, updateDefinition);
 
         if (result.MatchedCount == 0)
         {
-            return NotFound($"Application with ID {id} not found.");
+            
+            return NotFound($"Application with ID {id} created.");
+
         }
 
         if (result.ModifiedCount == 0)

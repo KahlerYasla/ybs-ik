@@ -9,15 +9,15 @@ namespace ybs.Models.DTO
         public string Id { get; set; }
         
         [BsonElement("title"), BsonRepresentation(MongoDB.Bson.BsonType.String)]
-        public string Title { get; set; }
+        public string title { get; set; }
         
         [BsonElement("content"), BsonRepresentation(MongoDB.Bson.BsonType.String)]
-        public string Content { get; set; }
+        public string content { get; set; }
     }
 
     public class ReportUpdateDTO
     {
-        public string Title { get; set; }
-        public string Content { get; set; }
+        public string title { get; set; }
+        public string content { get; set; }
     }
 }

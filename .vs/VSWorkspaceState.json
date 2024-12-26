@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\services",
+    "\\services\\ybs",
+    "\\services\\ybs\\ybs",
+    "\\services\\ybs\\ybs\\Data"
   ],
-  "SelectedNode": "\\C:\\Users\\umutc\\OneDrive\\Masa\u00FCst\u00FC\\ybs-ik",
+  "SelectedNode": "\\services\\ybs\\ybs\\Data\\MongoDbService.cs",
   "PreviewInSolutionExplorer": false
 }
