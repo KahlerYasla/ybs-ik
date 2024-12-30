@@ -7,7 +7,7 @@ public class ApplicationDTO
     [BsonElement("_id"), BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
     public string applicationId { get; set; }
     
-    [BsonElement("candidatename"), BsonRepresentation(MongoDB.Bson.BsonType.String)]
+    [BsonElement("candidateName"), BsonRepresentation(MongoDB.Bson.BsonType.String)]
     public string candidateName { get; set; }
 
     [BsonElement("status"), BsonRepresentation(MongoDB.Bson.BsonType.Int64)]
