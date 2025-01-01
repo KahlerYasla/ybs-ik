@@ -1,7 +1,6 @@
 import React from "react"
 import CButton from "../../common/components/CButton"
 import { CInputField, CLogoSection } from "../../common"
-import "./LoginContainer.css" // Import the CSS file
 
 interface LoginContainerProps {
     className?: string
@@ -15,15 +14,8 @@ const LoginContainer: React.FC<LoginContainerProps> = ({ className }) => {
 
     return (
         <div className="flex items-center justify-center min-h-screen relative">
-            <div className="snowflakes" aria-hidden="true">
-                {[...Array(10)].map((_, i) => (
-                    <div key={i} className="snowflake">
-                        ❅
-                    </div>
-                ))}
-            </div>
             <div className="flex flex-row md:grid md:grid-cols-2 w-screen h-screen z-10">
-                <div className="flex flex-col w-full min-w-96 px-10 pt-10 justify-center gap-16 items-center pb-16">
+                <div className="flex flex-col w-full min-w-96 px-10 pt-10 justify-center gap-16 items-center pb-32">
                     <div className="flex items-center">
                         <CLogoSection />
                     </div>
