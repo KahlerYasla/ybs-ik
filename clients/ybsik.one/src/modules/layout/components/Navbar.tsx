@@ -3,7 +3,7 @@ import CLogoSection from "../../common/components/CLogoSection"
 
 const Navbar: React.FC = () => {
     return (
-        <nav className="bg-white text-black p-1 fixed w-full border-b shadow-md">
+        <nav className="bg-white text-black p-1 fixed w-full border-b shadow">
             <div className="container mx-auto flex justify-between items-center text-sm font-bold">
                 <CLogoSection isHorizontal />
                 <div className="flex space-x-12">

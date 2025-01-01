@@ -26,9 +26,11 @@ const CLogoSection: React.FC<CLogoSectionProps> = ({
             />
             {isHorizontal && (
                 <span
-                    className={`font-bold ${lightMode ? "text-primary" : ""}`}
+                    className={`font-bold ${
+                        lightMode ? "text-primary" : "text-primary"
+                    }`}
                 >
-                    |
+                    ||
                 </span>
             )}
             <span
