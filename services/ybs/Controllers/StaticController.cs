@@ -63,24 +63,24 @@ public class StaticController : ControllerBase
     [HttpGet("report/{id}")]
     public async Task<ActionResult<ReportDTO>> GetReportById(string id)
     {
-        var filterDefinition = Builders<ReportDTO>.Filter.Eq(x=>x.Id,id);
+        var filterDefinition = Builders<ReportDTO>.Filter.Eq(x => x.Id, id);
         return await _reports.Find(filterDefinition).SingleOrDefaultAsync();
 
     }
     [HttpPost("report/create")]
-    public async Task<ActionResult> CreateReport( [FromBody] ReportUpdateDTO reportData)
+    public async Task<ActionResult> CreateReport([FromBody] ReportUpdateDTO reportData)
     {
-        
 
-        await _createReports.InsertOneAsync(document:reportData);
-   
-       
+
+        await _createReports.InsertOneAsync(document: reportData);
+
+
         return Ok("Created");
     }
 
     [HttpPut("report/{id}")]
     public async Task<ActionResult<ReportDTO>> UpdateReportById(string id, [FromBody] ReportUpdateDTO reportData)
-    {   
+    {
         var filterDefinition = Builders<ReportDTO>.Filter.Eq(x => x.Id, id);
         var updateDefinition = Builders<ReportDTO>.Update
        .Set(x => x.title, reportData.title)

@@ -4,6 +4,7 @@ import React from "react"
 // Components
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
+import AlertSection from "../../common/sections/AlertSection"
 
 interface LayoutContainerProps {
     className?: string
@@ -11,11 +12,16 @@ interface LayoutContainerProps {
 
 const LayoutContainer: React.FC<LayoutContainerProps> = ({ className }) => {
     return (
-        <div className={` ${className}`}>
-            {!window.location.pathname.endsWith("/") && <Navbar />}
-            <Outlet />
-            <Footer />
-        </div>
+        <>
+            <div className={`${className}`}>
+                {!window.location.pathname.endsWith("/") && <Navbar />}
+                <div className="container mx-auto">
+                    <Outlet />
+                </div>
+                <Footer />
+            </div>
+            <AlertSection />
+        </>
     )
 }
 

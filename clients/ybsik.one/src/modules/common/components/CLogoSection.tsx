@@ -20,17 +20,17 @@ const CLogoSection: React.FC<CLogoSectionProps> = ({
             <img
                 src="/brand/raw.png"
                 alt="Logo"
-                className={`w-7 h-7 ${
+                className={`w-6 h-6 ${
                     lightMode ? "filter invert" : ""
                 } ${className}`}
             />
             {isHorizontal && (
                 <span
                     className={`font-bold ${
-                        lightMode ? "text-primary" : "text-primary"
+                        lightMode ? "text-black" : "text-black font-normal"
                     }`}
                 >
-                    ||
+                    |
                 </span>
             )}
             <span

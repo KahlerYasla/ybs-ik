@@ -1,5 +1,12 @@
 import React from "react"
 import CLogoSection from "../../common/components/CLogoSection"
+import {
+    FaTachometerAlt,
+    FaFileAlt,
+    FaBook,
+    FaCalendarAlt,
+} from "react-icons/fa"
+import { Link } from "react-router-dom"
 
 const Navbar: React.FC = () => {
     return (
@@ -7,18 +14,27 @@ const Navbar: React.FC = () => {
             <div className="container mx-auto flex justify-between items-center text-sm font-bold">
                 <CLogoSection isHorizontal />
                 <div className="flex space-x-12">
-                    <a href="#" className=" hover:text-gray-400">
-                        Dashboard
-                    </a>
-                    <a href="#" className=" hover:text-gray-400">
-                        Applications
-                    </a>
-                    <a href="#" className=" hover:text-gray-400">
-                        Docs
-                    </a>
-                    <a href="#" className=" hover:text-gray-400">
-                        Day Offs
-                    </a>
+                    <Link
+                        to="/dash"
+                        className="flex items-center hover:text-gray-400"
+                    >
+                        <FaTachometerAlt className="mr-2 text-red-500" />
+                        dashboard
+                    </Link>
+                    <Link
+                        to="/application"
+                        className="flex items-center hover:text-gray-400"
+                    >
+                        <FaFileAlt className="mr-2 text-orange-500" />
+                        applications
+                    </Link>
+                    <Link
+                        to="/day-off"
+                        className="flex items-center hover:text-gray-400"
+                    >
+                        <FaCalendarAlt className="mr-2 text-blue-500" />
+                        day-offs
+                    </Link>
                 </div>
             </div>
         </nav>

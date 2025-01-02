@@ -9,7 +9,7 @@ const CButton: React.FC<CButtonProps> = ({ children, className, ...props }) => {
     return (
         <button
             {...props}
-            className={`py-3 px-5 
+            className={`py-3 px-5
             ${
                 props.secondary
                     ? "border-2 border-opacity-60 border-black text-black"
