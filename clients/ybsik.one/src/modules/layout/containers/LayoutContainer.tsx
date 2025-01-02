@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom"
-import React from "react"
+import React, { useEffect } from "react"
 
 // Components
 import Navbar from "../components/Navbar"

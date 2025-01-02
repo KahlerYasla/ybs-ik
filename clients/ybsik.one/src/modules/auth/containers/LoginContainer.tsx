@@ -1,4 +1,5 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
 
 // Components
 import CButton from "../../common/components/CButton"
@@ -7,20 +8,16 @@ import { CInputField, CLogoSection } from "../../common"
 // Stores
 import { useLayout } from "../../layout/hooks/useLayout"
 
-// Types
-import Alert from "../../common/types/alert"
-
 interface LoginContainerProps {
     className?: string
 }
 
 const LoginContainer: React.FC<LoginContainerProps> = ({ className }) => {
-    // States
     const [username, setUsername] = React.useState("")
     const [password, setPassword] = React.useState("")
 
-    // Stores
     const addAlert = useLayout((state) => state.addAlert)
+    const navigate = useNavigate() // Use navigate for redirection
 
     const handleLogin = () => {
         if (username === "" || password === "") {
@@ -34,22 +31,23 @@ const LoginContainer: React.FC<LoginContainerProps> = ({ className }) => {
         }
 
         if (username !== "admin" || password !== "admin") {
-            return addAlert({
+            addAlert({
                 id: new Date().getTime(),
                 message: "Invalid username or password",
                 onClose: (id: number) => {},
                 type: "error",
             })
+            return
         }
 
-        window.location.replace("/dash")
-
+        // Redirect to dashboard using navigate
         addAlert({
             id: new Date().getTime(),
             message: "Login successful",
             onClose: (id: number) => {},
             type: "success",
         })
+        navigate("/dash") // Redirect to dashboard
     }
 
     return (
@@ -86,7 +84,7 @@ const LoginContainer: React.FC<LoginContainerProps> = ({ className }) => {
                             login
                         </CButton>
                         <CButton
-                            onClick={() => window.location.replace("/register")}
+                            onClick={() => navigate("/register")}
                             className="w-full"
                             secondary
                         >
@@ -95,7 +93,7 @@ const LoginContainer: React.FC<LoginContainerProps> = ({ className }) => {
                     </div>
                 </div>
                 <img
-                    className="hidden top-0 md:static  md:flex bg-center grayscale-[0] object-cover bg-blue-500 w-full h-full"
+                    className="hidden top-0 md:static md:flex bg-center grayscale-[0] object-cover bg-blue-500 w-full h-full"
                     src="/images/login2.jpeg"
                     alt="Login Background"
                 />
