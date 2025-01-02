@@ -7,34 +7,28 @@ import {
     FaEdit,
 } from "react-icons/fa"
 import { CButton } from "../../common"
+import useApplicationStore from "../hooks/useApplication"
 
-interface Application {
+export interface Application {
     id: number
     name: string
     status: "approved" | "rejected" | "pending"
+    age: number
+    appliedProject: string
+    gender: "Male" | "Female"
+    experience: number
+    field: string
+    salaryExpectation: number
 }
 
-const sampleApplications: Application[] = [
-    { id: 1, name: "John Doe", status: "pending" },
-    { id: 2, name: "Jane Smith", status: "rejected" },
-    { id: 3, name: "Alice Johnson", status: "pending" },
-    { id: 4, name: "Bob Brown", status: "approved" },
-    { id: 5, name: "Charlie Davis", status: "pending" },
-    { id: 6, name: "Diana Evans", status: "pending" },
-    { id: 7, name: "Eve White", status: "approved" },
-    { id: 8, name: "Frank Green", status: "rejected" },
-    { id: 9, name: "Grace Lee", status: "pending" },
-    { id: 10, name: "Hank Miller", status: "approved" },
-    { id: 11, name: "Ivy Wilson", status: "rejected" },
-    { id: 12, name: "Jack Taylor", status: "pending" },
-    { id: 13, name: "Kelly Young", status: "approved" },
-    { id: 14, name: "Larry Harris", status: "pending" },
-    { id: 15, name: "Mona Allen", status: "pending" },
-    { id: 16, name: "Nina King", status: "pending" },
-]
-
 const ApplicationContainer: React.FC = () => {
-    const [applications, setApplications] = useState(sampleApplications)
+    // Stores
+    const applications = useApplicationStore((state) => state.applications)
+    const setApplications = useApplicationStore(
+        (state) => state.setApplications
+    )
+
+    // States
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
 
     const groupedApplications = applications.reduce((acc, application) => {
@@ -48,11 +42,11 @@ const ApplicationContainer: React.FC = () => {
     const renderIcon = (status: string) => {
         switch (status) {
             case "approved":
-                return <FaCheckCircle className="text-green-800" />
+                return <FaCheckCircle className="text-1" />
             case "rejected":
-                return <FaTimesCircle className="text-red-800" />
+                return <FaTimesCircle className="text-4" />
             case "pending":
-                return <FaClock className="text-yellow-800" />
+                return <FaClock className="text-5" />
             default:
                 return null
         }
@@ -75,7 +69,7 @@ const ApplicationContainer: React.FC = () => {
     }
 
     const handleShowFile = (type: string, name: string) => {
-        const temporaryLink = `https://www.orimi.com/pdf-test.pdf` // Replace with your actual file link
+        const temporaryLink = `https://www.orimi.com/pdf-test.pdf` // Replace later :D
         window.open(temporaryLink, "_blank")
     }
 
@@ -92,7 +86,7 @@ const ApplicationContainer: React.FC = () => {
     }
 
     return (
-        <div className="p-4 container py-24">
+        <div className="p-4 container">
             <CButton onClick={handleSort} className="mb-16">
                 Sort by Name ({sortOrder === "asc" ? "Ascending" : "Descending"}
                 )
@@ -113,7 +107,7 @@ const ApplicationContainer: React.FC = () => {
                         .map((application) => (
                             <div
                                 key={application.id}
-                                className={`flex items-center p-4 rounded border-b border-gray-300 bg-yellow-100`}
+                                className={`flex items-center p-4 border-gray-300 border-b`}
                             >
                                 <div className="mr-4">
                                     {renderIcon(application.status)}
@@ -223,7 +217,13 @@ const ApplicationContainer: React.FC = () => {
                                 .map((application) => (
                                     <div
                                         key={application.id}
-                                        className={`flex items-center p-4 rounded border-b border-gray-300`}
+                                        className={`flex items-center p-4 border-b border-gray-300 
+                                            bg-${
+                                                status === "approved"
+                                                    ? "green"
+                                                    : "red"
+                                            }-50
+                                        `}
                                     >
                                         <div className="mr-4">
                                             {renderIcon(application.status)}

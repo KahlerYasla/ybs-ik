@@ -9,6 +9,12 @@ module.exports = {
                 // primary: "#c2410c",
                 // primary: "#000",
                 // primary: "#2563eb",
+
+                1: "#003f5c",
+                2: "#58508d",
+                3: "#bc5090",
+                4: "#ff6361",
+                5: "#ffa600",
             },
         },
     },

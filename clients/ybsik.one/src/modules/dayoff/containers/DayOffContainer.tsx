@@ -1,12 +1,13 @@
 import React, { useState } from "react"
-import Timeline from "react-calendar-timeline"
+import Timeline, { CustomHeader, DateHeader } from "react-calendar-timeline"
 import moment from "moment"
 import { FaCircle, FaCheckCircle, FaTimesCircle } from "react-icons/fa"
 
 const groups = [
     { id: 1, title: "Selin Cirak" },
-    { id: 2, title: "Joe Biden" },
-    { id: 3, title: "Kamala Harris" },
+    { id: 2, title: "Mehmet Yilmaz" },
+    { id: 3, title: "Ayse Yilmaz" },
+    { id: 4, title: "Ahmet Yilmaz" },
 ]
 
 const DayOffContainer: React.FC = () => {
@@ -43,6 +44,22 @@ const DayOffContainer: React.FC = () => {
             end_time: moment().add(5, "days").valueOf(),
             status: "Rejected",
         },
+        {
+            id: 5,
+            group: 4,
+            title: "Vacation",
+            start_time: moment().add(3, "days").valueOf(),
+            end_time: moment().add(4, "days").valueOf(),
+            status: "Pending",
+        },
+        {
+            id: 6,
+            group: 4,
+            title: "Sick Leave",
+            start_time: moment().add(5, "days").valueOf(),
+            end_time: moment().add(7, "days").valueOf(),
+            status: "Approved",
+        },
     ])
 
     const handleEdit = (id: number, field: string, value: any) => {
@@ -58,6 +75,19 @@ const DayOffContainer: React.FC = () => {
         items: items.filter((item) => item.group === group.id),
     }))
 
+    const getRowColor = (status: string) => {
+        switch (status) {
+            case "Pending":
+                return "bg-5" // Light gray background for pending
+            case "Approved":
+                return "bg-1" // Light green background for approved
+            case "Rejected":
+                return "bg-4" // Light red background for rejected
+            default:
+                return "" // No background for unknown status
+        }
+    }
+
     return (
         <>
             <div className="p-4">
@@ -65,6 +95,12 @@ const DayOffContainer: React.FC = () => {
                     Employee Day Off Timeline
                 </h1>
                 <Timeline
+                    groupRenderer={({ group }) => {
+                        return (
+                            <div className="bg-white px-4">{group.title}</div>
+                        )
+                    }}
+                    className="bg-white text-black"
                     canMove={true}
                     canResize={true}
                     groups={groups}
@@ -73,7 +109,23 @@ const DayOffContainer: React.FC = () => {
                     stackItems={true}
                     defaultTimeStart={moment().add(-12, "days")}
                     defaultTimeEnd={moment().add(12, "days")}
-                />
+                >
+                    <DateHeader unit="primaryHeader" />
+                    <DateHeader />
+                    <CustomHeader
+                        height={0}
+                        headerData={{ someData: "data" }}
+                        unit="year"
+                    >
+                        {() => {
+                            return (
+                                <div className="bg-white text-black px-4">
+                                    Custom header
+                                </div>
+                            )
+                        }}
+                    </CustomHeader>
+                </Timeline>
             </div>
             <div className="p-4">
                 <h1 className="text-2xl font-bold mb-4">
@@ -87,15 +139,28 @@ const DayOffContainer: React.FC = () => {
                         <table className="w-full border-collapse">
                             <thead>
                                 <tr>
-                                    <th className="border p-2">Title</th>
-                                    <th className="border p-2">Start Time</th>
-                                    <th className="border p-2">End Time</th>
-                                    <th className="border p-2">Status</th>
+                                    <th className="border p-2 bg-white text-black">
+                                        Title
+                                    </th>
+                                    <th className="border p-2 bg-white text-black">
+                                        Start Time
+                                    </th>
+                                    <th className="border p-2 bg-white text-black">
+                                        End Time
+                                    </th>
+                                    <th className="border p-2 bg-white text-black">
+                                        Status
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {group.items.map((item) => (
-                                    <tr key={item.id}>
+                                    <tr
+                                        key={item.id}
+                                        className={`border p-2 ${getRowColor(
+                                            item.status
+                                        )}`}
+                                    >
                                         <td className="border p-2">
                                             <input
                                                 type="text"
@@ -107,7 +172,7 @@ const DayOffContainer: React.FC = () => {
                                                         e.target.value
                                                     )
                                                 }
-                                                className="w-full"
+                                                className="w-full text-white bg-transparent font-bold"
                                             />
                                         </td>
                                         <td className="border p-2">
@@ -125,7 +190,7 @@ const DayOffContainer: React.FC = () => {
                                                         ).valueOf()
                                                     )
                                                 }
-                                                className="w-full"
+                                                className="w-full text-white bg-transparent font-bold"
                                             />
                                         </td>
                                         <td className="border p-2">
@@ -143,7 +208,7 @@ const DayOffContainer: React.FC = () => {
                                                         ).valueOf()
                                                     )
                                                 }
-                                                className="w-full"
+                                                className="w-full text-white bg-transparent font-bold"
                                             />
                                         </td>
                                         <td className="border p-2">
@@ -156,7 +221,7 @@ const DayOffContainer: React.FC = () => {
                                                         e.target.value
                                                     )
                                                 }
-                                                className="w-full"
+                                                className="w-full text-white bg-transparent font-bold"
                                             >
                                                 <option value="Pending">
                                                     <FaCircle className="text-gray-400" />{" "}

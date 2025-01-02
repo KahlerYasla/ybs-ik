@@ -54,8 +54,8 @@ const LoginContainer: React.FC<LoginContainerProps> = ({ className }) => {
 
     return (
         <div className="flex items-center justify-center min-h-screen relative">
-            <div className="flex flex-row md:grid md:grid-cols-2 w-screen h-screen z-10">
-                <div className="flex flex-col w-full min-w-96 px-10 pt-10 justify-center gap-16 items-center pb-32">
+            <div className="flex md:grid md:grid-cols-2 w-screen h-screen z-10">
+                <div className="flex flex-col w-full min-w-96 px-10 pt-10 justify-center gap-16 items-center pb-32 z-20">
                     <div className="flex items-center">
                         <CLogoSection />
                     </div>
@@ -95,7 +95,7 @@ const LoginContainer: React.FC<LoginContainerProps> = ({ className }) => {
                     </div>
                 </div>
                 <img
-                    className="md:flex bg-center grayscale-[.7] object-cover hidden bg-blue-500 w-full h-full"
+                    className="hidden top-0 md:static  md:flex bg-center grayscale-[0] object-cover bg-blue-500 w-full h-full"
                     src="/images/login2.jpeg"
                     alt="Login Background"
                 />

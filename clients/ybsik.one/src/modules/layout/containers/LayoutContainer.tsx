@@ -15,7 +15,17 @@ const LayoutContainer: React.FC<LayoutContainerProps> = ({ className }) => {
         <>
             <div className={`${className}`}>
                 {!window.location.pathname.endsWith("/") && <Navbar />}
-                <div className="container mx-auto">
+
+                <div
+                    className={`
+                    mx-auto z-10
+                    ${
+                        !window.location.pathname.endsWith("/")
+                            ? "py-24 container"
+                            : ""
+                    }
+                `}
+                >
                     <Outlet />
                 </div>
                 <Footer />
